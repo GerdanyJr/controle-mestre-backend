@@ -1,5 +1,6 @@
 package br.ifba.edu.mercadinho.model.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,11 +12,15 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false, unique = true)
     private String cpnj;
     @OneToOne
     private Endereco endereco;
+    @Column(nullable = false, unique = true)
     private String telefone;
 
     public Fornecedor() {

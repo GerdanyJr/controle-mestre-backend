@@ -3,6 +3,7 @@ package br.ifba.edu.mercadinho.model.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,9 +14,13 @@ public class Saida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private LocalDateTime dataVencimento;
+    @Column(nullable = false)
     private BigDecimal preco;
+    @Column(nullable = false)
     private Integer numeroSaida;
 
     public Saida() {

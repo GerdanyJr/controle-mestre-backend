@@ -1,7 +1,10 @@
 package br.ifba.edu.mercadinho.model.entities;
 
 import br.ifba.edu.mercadinho.model.enums.Cargo;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,13 +15,19 @@ public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String apelido;
+    @Column(nullable = false, unique = true)
     private String cpf;
+    @Column(nullable = false, unique = true)
     private String email;
     @OneToOne
     private Endereco endereco;
+    @Column(nullable = false, unique = true)
     private String telefone;
+    @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
     public Funcionario() {

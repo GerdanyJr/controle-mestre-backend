@@ -3,7 +3,10 @@ package br.ifba.edu.mercadinho.model.entities;
 import java.time.LocalDate;
 
 import br.ifba.edu.mercadinho.model.enums.Sexo;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,10 +17,13 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false, unique = true)
     private String cpf;
     @OneToOne
     private Endereco endereco;
+    @Column(nullable = false)
     private LocalDate dataNascimento;
+    @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
     public Cliente() {

@@ -2,6 +2,7 @@ package br.ifba.edu.mercadinho.model.entities;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,9 @@ public class Estoque {
     private Integer id;
     @ManyToMany
     private List<Produto> produtos;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private Integer quantidade;
 
     public Estoque() {
