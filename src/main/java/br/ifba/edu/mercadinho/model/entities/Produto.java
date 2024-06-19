@@ -2,12 +2,12 @@ package br.ifba.edu.mercadinho.model.entities;
 
 import java.math.BigDecimal;
 
-import br.ifba.edu.mercadinho.model.enums.Categoria;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Produto {
@@ -18,6 +18,7 @@ public class Produto {
     private String nome;
     @Column(nullable = false)
     private String marca;
+    @ManyToOne
     private Categoria categoria;
     @Column(nullable = false)
     private BigDecimal preco;
