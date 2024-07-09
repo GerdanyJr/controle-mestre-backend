@@ -28,7 +28,7 @@ public class ProdutoService {
     }
 
     public List<Produto> obterProdutos(String search) {
-        return produtoRepository.findAllByNomeStartingWith(search);
+        return produtoRepository.findAllByNomeIgnoreCaseStartingWith(search);
     }
 
     public Produto atualizarProduto(AtualizarProdutoReq req) {
