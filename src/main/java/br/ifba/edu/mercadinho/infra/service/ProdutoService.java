@@ -1,12 +1,16 @@
 package br.ifba.edu.mercadinho.infra.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import br.ifba.edu.mercadinho.infra.repository.CategoriaRepository;
 import br.ifba.edu.mercadinho.infra.repository.ProdutoRepository;
 import br.ifba.edu.mercadinho.model.entities.Categoria;
 import br.ifba.edu.mercadinho.model.entities.Produto;
+import br.ifba.edu.mercadinho.model.exception.impl.ConflictException;
+import br.ifba.edu.mercadinho.model.exception.impl.NotFoundException;
 import br.ifba.edu.mercadinho.model.req.AtualizarProdutoReq;
 import br.ifba.edu.mercadinho.model.req.ProdutoReq;
 
@@ -22,9 +26,19 @@ public class ProdutoService {
 
     public Produto cadastrar(ProdutoReq produto) {
         Categoria categoria = categoriaRepository.findById(produto.categoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada!"));
-        return produtoRepository
-                .save(new Produto(null, produto.nome(), produto.marca(), categoria, produto.preco(), produto.cod()));
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada!"));
+        Optional<Produto> foundProduto = produtoRepository.findByCodigo(produto.cod());
+        if (foundProduto.isEmpty()) {
+            return produtoRepository
+                    .save(new Produto(null,
+                            produto.nome(),
+                            produto.marca(),
+                            categoria,
+                            produto.preco(),
+                            produto.cod()));
+        } else {
+            throw new ConflictException("Produto já cadastrado com o código " + produto.cod());
+        }
     }
 
     public List<Produto> obterProdutos(String search) {
@@ -32,10 +46,21 @@ public class ProdutoService {
     }
 
     public Produto atualizarProduto(AtualizarProdutoReq req) {
-        Produto produto = produtoRepository.findById(req.id())
-                .orElseThrow(() -> new RuntimeException("Produto não encontrada!"));
-        Categoria categoria = categoriaRepository.findById(req.categoriaId())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada!"));
+        Optional<Produto> foundProduto = produtoRepository
+                .findByCodigo(req.codigo());
+
+        if (foundProduto.isPresent()) {
+            throw new ConflictException("Produto já cadastrado com o código " + req.codigo());
+        }
+
+        Produto produto = produtoRepository
+                .findById(req.id())
+                .orElseThrow(() -> new NotFoundException("Produto não encontrada!"));
+
+        Categoria categoria = categoriaRepository
+                .findById(req.categoriaId())
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada!"));
+
         produto.setCategoria(categoria);
         produto.setPreco(req.preco());
         produto.setCodigo(req.codigo());
@@ -46,7 +71,7 @@ public class ProdutoService {
 
     public void deletarProduto(Integer id) {
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrada!"));
+                .orElseThrow(() -> new NotFoundException("Produto não encontrada!"));
         produtoRepository.delete(produto);
     }
 }
