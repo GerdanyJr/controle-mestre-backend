@@ -46,16 +46,16 @@ public class ProdutoService {
     }
 
     public Produto atualizarProduto(AtualizarProdutoReq req) {
-        Optional<Produto> foundProduto = produtoRepository
-                .findByCodigo(req.codigo());
-
-        if (foundProduto.isPresent()) {
-            throw new ConflictException("Produto já cadastrado com o código " + req.codigo());
-        }
-
         Produto produto = produtoRepository
                 .findById(req.id())
                 .orElseThrow(() -> new NotFoundException("Produto não encontrada!"));
+
+        Optional<Produto> foundProduto = produtoRepository
+                .findByCodigo(req.codigo());
+
+        if (foundProduto.isPresent() && req.id() != foundProduto.get().getId()) {
+            throw new ConflictException("Produto já cadastrado com o código " + req.codigo());
+        }
 
         Categoria categoria = categoriaRepository
                 .findById(req.categoriaId())
