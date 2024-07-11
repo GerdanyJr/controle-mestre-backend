@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import br.ifba.edu.mercadinho.infra.repository.CategoriaRepository;
+import br.ifba.edu.mercadinho.model.dto.CategoriaDto;
 import br.ifba.edu.mercadinho.model.entities.Categoria;
-import br.ifba.edu.mercadinho.model.req.CategoriaReq;
 
 @Service
 public class CategoriaService {
@@ -16,7 +16,7 @@ public class CategoriaService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria cadastrar(CategoriaReq categoria) {
+    public Categoria cadastrar(CategoriaDto categoria) {
         return categoriaRepository.save(new Categoria(null, categoria.nome()));
     }
 

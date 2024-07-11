@@ -3,6 +3,7 @@ package br.ifba.edu.mercadinho.model.entities;
 import java.time.LocalDate;
 
 import br.ifba.edu.mercadinho.model.enums.Sexo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,7 +20,7 @@ public class Cliente {
     private Integer id;
     @Column(nullable = false, unique = true)
     private String cpf;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Endereco endereco;
     @Column(nullable = false)
     private LocalDate dataNascimento;

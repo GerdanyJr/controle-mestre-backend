@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import br.ifba.edu.mercadinho.infra.repository.CategoriaRepository;
 import br.ifba.edu.mercadinho.infra.repository.ProdutoRepository;
+import br.ifba.edu.mercadinho.model.dto.ProdutoDto;
 import br.ifba.edu.mercadinho.model.entities.Categoria;
 import br.ifba.edu.mercadinho.model.entities.Produto;
 import br.ifba.edu.mercadinho.model.exception.impl.ConflictException;
 import br.ifba.edu.mercadinho.model.exception.impl.NotFoundException;
 import br.ifba.edu.mercadinho.model.req.AtualizarProdutoReq;
-import br.ifba.edu.mercadinho.model.req.ProdutoReq;
 
 @Service
 public class ProdutoService {
@@ -24,7 +24,7 @@ public class ProdutoService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Produto cadastrar(ProdutoReq produto) {
+    public Produto cadastrar(ProdutoDto produto) {
         Categoria categoria = categoriaRepository.findById(produto.categoriaId())
                 .orElseThrow(() -> new NotFoundException("Categoria não encontrada!"));
         Optional<Produto> foundProduto = produtoRepository.findByCodigo(produto.cod());

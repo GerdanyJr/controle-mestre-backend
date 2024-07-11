@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ifba.edu.mercadinho.infra.service.CategoriaService;
+import br.ifba.edu.mercadinho.model.dto.CategoriaDto;
 import br.ifba.edu.mercadinho.model.entities.Categoria;
-import br.ifba.edu.mercadinho.model.req.CategoriaReq;
 
 @RequestMapping("/categoria")
 @RestController
@@ -25,7 +25,7 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> cadastrar(@RequestBody CategoriaReq categoriaReq) {
+    public ResponseEntity<Categoria> cadastrar(@RequestBody CategoriaDto categoriaReq) {
         return ResponseEntity.ok(categoriaService.cadastrar(categoriaReq));
     }
 

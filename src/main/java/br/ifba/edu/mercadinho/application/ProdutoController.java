@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.ifba.edu.mercadinho.infra.service.ProdutoService;
+import br.ifba.edu.mercadinho.model.dto.ProdutoDto;
 import br.ifba.edu.mercadinho.model.entities.Produto;
 import br.ifba.edu.mercadinho.model.req.AtualizarProdutoReq;
-import br.ifba.edu.mercadinho.model.req.ProdutoReq;
 
 @RequestMapping("/produtos")
 @CrossOrigin("http://localhost:3000")
@@ -31,7 +31,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrar(@RequestBody ProdutoReq produtoReq) {
+    public ResponseEntity<Produto> cadastrar(@RequestBody ProdutoDto produtoReq) {
         return ResponseEntity.ok(produtoService.cadastrar(produtoReq));
     }
 
