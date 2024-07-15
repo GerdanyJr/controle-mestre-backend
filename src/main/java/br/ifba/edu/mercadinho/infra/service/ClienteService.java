@@ -10,6 +10,7 @@ import br.ifba.edu.mercadinho.infra.repository.EnderecoRepository;
 import br.ifba.edu.mercadinho.infra.util.Mapper;
 import br.ifba.edu.mercadinho.model.dto.ClienteDto;
 import br.ifba.edu.mercadinho.model.entities.Cliente;
+import br.ifba.edu.mercadinho.model.entities.Endereco;
 import br.ifba.edu.mercadinho.model.exception.impl.ConflictException;
 import br.ifba.edu.mercadinho.model.exception.impl.NotFoundException;
 
@@ -34,6 +35,31 @@ public class ClienteService {
                 req.dataDeNascimento(),
                 req.sexo());
         return clienteRepository.save(Mapper.fromDtoToEntity(dto));
+    }
+
+    public Cliente atualizar(ClienteDto req) {
+        Cliente cliente = clienteRepository
+                .findByCpf(req.cpf())
+                .orElseThrow(() -> new NotFoundException("Cliente não encontrada!"));
+        Endereco endereco = enderecoRepository
+                .findById(req.endereco().getId())
+                .orElseThrow(() -> new NotFoundException("Endereco inválido!"));
+
+        endereco.setBairro(req.endereco().getBairro());
+        endereco.setCep(req.endereco().getCep());
+        endereco.setCidade(req.endereco().getCidade());
+        endereco.setComplemento(req.endereco().getComplemento());
+        endereco.setNumero(req.endereco().getNumero());
+        endereco.setRua(req.endereco().getRua());
+        Endereco updatedEndereco = enderecoRepository.save(req.endereco());
+
+        cliente.setCpf(req.cpf());
+        cliente.setDataNascimento(req.dataDeNascimento());
+        cliente.setEndereco(updatedEndereco);
+        cliente.setNome(req.nome());
+        cliente.setSexo(req.sexo());
+        return clienteRepository.save(cliente);
+
     }
 
     public List<Cliente> obter() {

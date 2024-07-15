@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,11 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> cadastrarCliente(@RequestBody ClienteDto clienteDto) {
         return ResponseEntity.ok(clienteService.cadastrar(clienteDto));
+    }
+
+    @PatchMapping
+    public ResponseEntity<Cliente> atualizarCliente(@RequestBody ClienteDto clienteDto) {
+        return ResponseEntity.ok(clienteService.atualizar(clienteDto));
     }
 
     @GetMapping
