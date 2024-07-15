@@ -1,5 +1,6 @@
 package br.ifba.edu.mercadinho.infra.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import br.ifba.edu.mercadinho.infra.util.Mapper;
 import br.ifba.edu.mercadinho.model.dto.ClienteDto;
 import br.ifba.edu.mercadinho.model.entities.Cliente;
 import br.ifba.edu.mercadinho.model.exception.impl.ConflictException;
+import br.ifba.edu.mercadinho.model.exception.impl.NotFoundException;
 
 @Service
 public class ClienteService {
@@ -32,6 +34,17 @@ public class ClienteService {
                 req.dataDeNascimento(),
                 req.sexo());
         return clienteRepository.save(Mapper.fromDtoToEntity(dto));
+    }
+
+    public List<Cliente> obter() {
+        return clienteRepository.findAll();
+    }
+
+    public void deletar(Integer id) {
+        Cliente clienteEncontrado = clienteRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Cliente já encontrado com CPF " + id));
+        clienteRepository.delete(clienteEncontrado);
     }
 
 }

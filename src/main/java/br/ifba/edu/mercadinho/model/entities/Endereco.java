@@ -11,6 +11,8 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
+    private String cidade;
     @Column(nullable = false, length = 8)
     private String cep;
     @Column(nullable = false)
@@ -25,8 +27,10 @@ public class Endereco {
     public Endereco() {
     }
 
-    public Endereco(Integer id, String cep, Integer numero, String rua, String bairro, String complemento) {
+    public Endereco(Integer id, String cidade, String cep, Integer numero, String rua, String bairro,
+            String complemento) {
         this.id = id;
+        this.cidade = cidade;
         this.cep = cep;
         this.numero = numero;
         this.rua = rua;
@@ -80,6 +84,14 @@ public class Endereco {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
 }

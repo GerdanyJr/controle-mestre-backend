@@ -1,6 +1,10 @@
 package br.ifba.edu.mercadinho.application;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +16,7 @@ import br.ifba.edu.mercadinho.model.entities.Cliente;
 
 @RequestMapping("/cliente")
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class ClienteController {
 
     private final ClienteService clienteService;
@@ -23,5 +28,10 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<Cliente> cadastrarCliente(@RequestBody ClienteDto clienteDto) {
         return ResponseEntity.ok(clienteService.cadastrar(clienteDto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Cliente>> obterTodos() {
+        return ResponseEntity.ok(clienteService.obter());
     }
 }

@@ -18,6 +18,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String nome;
     @Column(nullable = false, unique = true)
     private String cpf;
     @OneToOne(cascade = CascadeType.REMOVE)
@@ -30,8 +31,9 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Integer id, String cpf, Endereco endereco, LocalDate dataNascimento, Sexo sexo) {
+    public Cliente(Integer id, String nome, String cpf, Endereco endereco, LocalDate dataNascimento, Sexo sexo) {
         this.id = id;
+        this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
         this.dataNascimento = dataNascimento;
@@ -76,6 +78,14 @@ public class Cliente {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 }

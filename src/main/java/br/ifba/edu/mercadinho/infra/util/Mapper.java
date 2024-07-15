@@ -20,6 +20,7 @@ public class Mapper {
 
     public static Cliente fromDtoToEntity(ClienteDto cliente) {
         return new Cliente(null,
+                cliente.nome(),
                 cliente.cpf(),
                 cliente.endereco(),
                 cliente.dataDeNascimento(),
@@ -28,6 +29,7 @@ public class Mapper {
 
     public static Endereco fromDtoToEntity(EnderecoDto endereco) {
         return new Endereco(null,
+                endereco.cidade(),
                 endereco.cep(),
                 endereco.numero(),
                 endereco.rua(),
