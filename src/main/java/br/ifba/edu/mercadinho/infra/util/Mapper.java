@@ -23,7 +23,7 @@ public class Mapper {
                 cliente.nome(),
                 cliente.cpf(),
                 cliente.endereco(),
-                cliente.dataDeNascimento(),
+                cliente.dataNascimento(),
                 cliente.sexo());
     }
 

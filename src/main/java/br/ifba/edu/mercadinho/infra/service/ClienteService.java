@@ -3,6 +3,7 @@ package br.ifba.edu.mercadinho.infra.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import br.ifba.edu.mercadinho.infra.repository.ClienteRepository;
@@ -32,32 +33,22 @@ public class ClienteService {
         ClienteDto dto = new ClienteDto(req.nome(),
                 req.cpf(),
                 enderecoRepository.save(req.endereco()),
-                req.dataDeNascimento(),
+                req.dataNascimento(),
                 req.sexo());
         return clienteRepository.save(Mapper.fromDtoToEntity(dto));
     }
 
-    public Cliente atualizar(ClienteDto req) {
+    public Cliente atualizar(Cliente req) {
         Cliente cliente = clienteRepository
-                .findByCpf(req.cpf())
+                .findById(req.getId())
                 .orElseThrow(() -> new NotFoundException("Cliente não encontrada!"));
         Endereco endereco = enderecoRepository
-                .findById(req.endereco().getId())
+                .findById(req.getEndereco().getId())
                 .orElseThrow(() -> new NotFoundException("Endereco inválido!"));
 
-        endereco.setBairro(req.endereco().getBairro());
-        endereco.setCep(req.endereco().getCep());
-        endereco.setCidade(req.endereco().getCidade());
-        endereco.setComplemento(req.endereco().getComplemento());
-        endereco.setNumero(req.endereco().getNumero());
-        endereco.setRua(req.endereco().getRua());
-        Endereco updatedEndereco = enderecoRepository.save(req.endereco());
-
-        cliente.setCpf(req.cpf());
-        cliente.setDataNascimento(req.dataDeNascimento());
-        cliente.setEndereco(updatedEndereco);
-        cliente.setNome(req.nome());
-        cliente.setSexo(req.sexo());
+        BeanUtils.copyProperties(req, cliente);
+        BeanUtils.copyProperties(req.getEndereco(), endereco);
+        cliente.setEndereco(enderecoRepository.save(req.getEndereco()));
         return clienteRepository.save(cliente);
 
     }
