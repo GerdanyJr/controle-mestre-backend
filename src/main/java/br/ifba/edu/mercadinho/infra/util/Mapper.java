@@ -22,7 +22,7 @@ public class Mapper {
         return new Cliente(null,
                 cliente.nome(),
                 cliente.cpf(),
-                cliente.endereco(),
+                cliente.endereco().orElse(null),
                 cliente.dataNascimento(),
                 cliente.sexo());
     }

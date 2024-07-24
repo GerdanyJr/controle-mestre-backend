@@ -30,9 +30,13 @@ public class ClienteService {
         if (clienteEncontrado.isPresent()) {
             throw new ConflictException("Cliente já encontrado com CPF " + req.cpf());
         }
+        Endereco endereco = null;
+        if (req.endereco().isPresent()) {
+            endereco = enderecoRepository.save(req.endereco().get());
+        }
         ClienteDto dto = new ClienteDto(req.nome(),
                 req.cpf(),
-                enderecoRepository.save(req.endereco()),
+                Optional.ofNullable(endereco),
                 req.dataNascimento(),
                 req.sexo());
         return clienteRepository.save(Mapper.fromDtoToEntity(dto));
@@ -42,13 +46,16 @@ public class ClienteService {
         Cliente cliente = clienteRepository
                 .findById(req.getId())
                 .orElseThrow(() -> new NotFoundException("Cliente não encontrada!"));
-        Endereco endereco = enderecoRepository
-                .findById(req.getEndereco().getId())
-                .orElseThrow(() -> new NotFoundException("Endereco inválido!"));
-
         BeanUtils.copyProperties(req, cliente);
-        BeanUtils.copyProperties(req.getEndereco(), endereco);
-        cliente.setEndereco(enderecoRepository.save(req.getEndereco()));
+        if (req.getEndereco() != null) {
+            Optional<Endereco> foundEndereco = enderecoRepository
+                    .findById(req.getEndereco().getId());
+            if (foundEndereco.isPresent()) {
+                BeanUtils.copyProperties(req.getEndereco(), foundEndereco.get());
+            }
+            cliente.setEndereco(enderecoRepository.save(req.getEndereco()));
+        }
+
         return clienteRepository.save(cliente);
 
     }
