@@ -2,11 +2,13 @@ package br.ifba.edu.mercadinho.infra.util;
 
 import br.ifba.edu.mercadinho.model.dto.ClienteDto;
 import br.ifba.edu.mercadinho.model.dto.EnderecoDto;
+import br.ifba.edu.mercadinho.model.dto.FornecedorDto;
 import br.ifba.edu.mercadinho.model.dto.FuncionarioDto;
 import br.ifba.edu.mercadinho.model.dto.ProdutoDto;
 import br.ifba.edu.mercadinho.model.entities.Categoria;
 import br.ifba.edu.mercadinho.model.entities.Cliente;
 import br.ifba.edu.mercadinho.model.entities.Endereco;
+import br.ifba.edu.mercadinho.model.entities.Fornecedor;
 import br.ifba.edu.mercadinho.model.entities.Funcionario;
 import br.ifba.edu.mercadinho.model.entities.Produto;
 
@@ -48,5 +50,14 @@ public class Mapper {
                 funcionario.endereco().orElse(null),
                 funcionario.telefone(),
                 funcionario.cargo());
+    }
+
+    public static Fornecedor fromDtoToEntity(FornecedorDto fornecedor) {
+        return new Fornecedor(null,
+                fornecedor.nome(),
+                fornecedor.email(),
+                fornecedor.cnpj(),
+                fornecedor.endereco().orElse(null),
+                fornecedor.telefone());
     }
 }

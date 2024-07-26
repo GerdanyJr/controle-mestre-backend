@@ -14,40 +14,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.ifba.edu.mercadinho.infra.service.FuncionarioService;
-import br.ifba.edu.mercadinho.model.dto.FuncionarioDto;
-import br.ifba.edu.mercadinho.model.entities.Funcionario;
+import br.ifba.edu.mercadinho.infra.service.FornecedorService;
+import br.ifba.edu.mercadinho.model.dto.FornecedorDto;
+import br.ifba.edu.mercadinho.model.entities.Fornecedor;
 
-@RequestMapping("/funcionario")
+@RequestMapping("/fornecedor")
 @RestController
 @CrossOrigin("http://localhost:3000")
-public class FuncionarioController {
+public class FornecedorController {
 
-    private final FuncionarioService funcionarioService;
+    private final FornecedorService fornecedorService;
 
-    public FuncionarioController(FuncionarioService funcionarioService) {
-        this.funcionarioService = funcionarioService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Funcionario>> obterTodos() {
-        return ResponseEntity.ok(funcionarioService.obterTodos());
+    public FornecedorController(FornecedorService fornecedorService) {
+        this.fornecedorService = fornecedorService;
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody FuncionarioDto dto) {
-        funcionarioService.cadastrar(dto);
+    public ResponseEntity<Void> cadastrar(@RequestBody FornecedorDto fornecedorDto) {
+        fornecedorService.cadastrar(fornecedorDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<Fornecedor>> obterTodos() {
+        return ResponseEntity.ok(fornecedorService.obterTodos());
+    }
+
     @PatchMapping
-    public ResponseEntity<Funcionario> atualizar(@RequestBody Funcionario funcionario) {
-        return ResponseEntity.ok(funcionarioService.atualizar(funcionario));
+    public ResponseEntity<Fornecedor> atualizar(@RequestBody Fornecedor fornecedor) {
+        return ResponseEntity.ok(fornecedorService.atualizar(fornecedor));
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
-        funcionarioService.deletar(id);
+        fornecedorService.deletar(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

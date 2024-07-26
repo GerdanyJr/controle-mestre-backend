@@ -1,5 +1,6 @@
 package br.ifba.edu.mercadinho.model.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,8 +18,8 @@ public class Fornecedor {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, unique = true)
-    private String cpnj;
-    @OneToOne
+    private String cnpj;
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Endereco endereco;
     @Column(nullable = false, unique = true)
     private String telefone;
@@ -26,11 +27,11 @@ public class Fornecedor {
     public Fornecedor() {
     }
 
-    public Fornecedor(Integer id, String nome, String email, String cpnj, Endereco endereco, String telefone) {
+    public Fornecedor(Integer id, String nome, String email, String cnpj, Endereco endereco, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.cpnj = cpnj;
+        this.cnpj = cnpj;
         this.endereco = endereco;
         this.telefone = telefone;
     }
@@ -59,12 +60,12 @@ public class Fornecedor {
         this.email = email;
     }
 
-    public String getCpnj() {
-        return cpnj;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCpnj(String cpnj) {
-        this.cpnj = cpnj;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public Endereco getEndereco() {
