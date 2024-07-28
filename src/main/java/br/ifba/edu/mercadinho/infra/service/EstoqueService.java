@@ -39,8 +39,9 @@ public class EstoqueService {
     }
 
     public Estoque atualizar(AtualizarEstoqueReq updated) {
-        Optional<Estoque> byNameEstoque = estoqueRepository.findById(updated.id());
-        if (byNameEstoque.isPresent()) {
+        Optional<Estoque> byNameEstoque = estoqueRepository.findByNome(updated.nome());
+        if (byNameEstoque.isPresent() &&
+                byNameEstoque.get().getId() != updated.id()) {
             throw new ConflictException("Estoque já cadastrado com nome " + updated.nome());
         }
         Estoque foundEstoque = estoqueRepository

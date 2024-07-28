@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,6 @@ import br.ifba.edu.mercadinho.infra.service.EstoqueService;
 import br.ifba.edu.mercadinho.model.dto.EstoqueDto;
 import br.ifba.edu.mercadinho.model.entities.Estoque;
 import br.ifba.edu.mercadinho.model.req.AtualizarEstoqueReq;
-import jakarta.websocket.server.PathParam;
 
 @RequestMapping("/estoque")
 @RestController
@@ -46,7 +46,8 @@ public class EstoqueController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar(@PathParam("id") Integer id) {
+    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id) {
+        System.out.println(id);
         estoqueService.deletar(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
