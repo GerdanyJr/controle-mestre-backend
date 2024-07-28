@@ -1,21 +1,19 @@
 package br.ifba.edu.mercadinho.model.entities;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Estoque {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToMany
-    private List<Produto> produtos;
+    @ManyToOne
+    private Produto produto;
     @Column(nullable = false)
     private String nome;
     @Column(nullable = false)
@@ -24,9 +22,9 @@ public class Estoque {
     public Estoque() {
     }
 
-    public Estoque(Integer id, List<Produto> produtos, String nome, Integer quantidade) {
+    public Estoque(Integer id, Produto produto, String nome, Integer quantidade) {
         this.id = id;
-        this.produtos = produtos;
+        this.produto = produto;
         this.nome = nome;
         this.quantidade = quantidade;
     }
@@ -37,14 +35,6 @@ public class Estoque {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
     }
 
     public String getNome() {
@@ -61,6 +51,14 @@ public class Estoque {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
 }
