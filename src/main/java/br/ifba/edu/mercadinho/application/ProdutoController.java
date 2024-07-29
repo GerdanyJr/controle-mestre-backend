@@ -37,8 +37,8 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<Produto>> obterProdutos(
-            @RequestParam(required = false, defaultValue = "") String search) {
-        return ResponseEntity.ok(produtoService.obterProdutos(search));
+            @RequestParam(value = "categoryId", required = false, defaultValue = "-1") Integer categoryId) {
+        return ResponseEntity.ok(produtoService.obterProdutos(categoryId));
     }
 
     @PatchMapping

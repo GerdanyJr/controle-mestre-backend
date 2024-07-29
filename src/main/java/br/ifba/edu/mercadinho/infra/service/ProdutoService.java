@@ -41,8 +41,14 @@ public class ProdutoService {
         }
     }
 
-    public List<Produto> obterProdutos(String search) {
-        return produtoRepository.findAllByNomeIgnoreCaseStartingWith(search);
+    public List<Produto> obterProdutos(Integer category) {
+        if (category != -1) {
+            Categoria categoria = categoriaRepository
+                    .findById(category)
+                    .orElseThrow(() -> new NotFoundException("Categoria não encontrada com id informado"));
+            return produtoRepository.findAllByCategoria(categoria);
+        }
+        return produtoRepository.findAll();
     }
 
     public Produto atualizarProduto(AtualizarProdutoReq req) {
